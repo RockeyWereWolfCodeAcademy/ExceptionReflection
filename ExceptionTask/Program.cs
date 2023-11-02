@@ -1,4 +1,4 @@
-﻿using ExceptionTask.Exceptions;
+using ExceptionTask.Exceptions;
 using ExceptionTask.Models;
 using System.Formats.Asn1;
 using System.Reflection;
@@ -13,31 +13,74 @@ namespace ExceptionTask
         static void Main(string[] args)
         {
             //task 1
-            bool doLoop = true;
-            do
+            User user = new User();
+            bool isValidInput = false;
+
+            while (!isValidInput)
             {
                 try
                 {
-                    CreateUser();
-                    doLoop = false;
+                    Console.Write("Enter name: ");
+                    user.Name = Console.ReadLine();
+                    isValidInput = true; // Name is valid, exit the loop
                 }
-                catch (InvalidAgeException e)
+                catch (Exception ex)
                 {
-                    Console.WriteLine($"{e.Message}, try again!");
+                    Console.WriteLine($"Error: {ex.Message}");
                 }
-                catch (InvalidNameException e)
+            }
+
+            isValidInput = false;
+
+            while (!isValidInput)
+            {
+                try
                 {
-                    Console.WriteLine($"{e.Message}, try again!");
+                    Console.Write("Enter age: ");
+                    user.Age = byte.Parse(Console.ReadLine());
+                    isValidInput = true; // Age is valid, exit the loop
                 }
-                catch (InvalidPhoneFormatException e)
+                catch (Exception ex)
                 {
-                    Console.WriteLine($"{e.Message}, try again!");
+                    Console.WriteLine($"Error: {ex.Message}");
                 }
-                catch (PasswordException e)
+            }
+
+            isValidInput = false;
+
+            while (!isValidInput)
+            {
+                try
                 {
-                    Console.WriteLine($"{e.Message}, try again!");
+                    Console.Write("Enter phone number: ");
+                    user.PhoneNumber = Console.ReadLine();
+                    isValidInput = true; // PhoneNumber is valid, exit the loop
                 }
-            } while (doLoop);
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
+
+            isValidInput = false;
+
+            while (!isValidInput)
+            {
+                try
+                {
+                    Console.Write("Enter password: ");
+                    user.Password = Console.ReadLine();
+                    isValidInput = true; // Password is valid, exit the loop
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
+
+            Console.WriteLine("User registration successful!");
+
+
             //task 2
             //UserReflection userSecond = new UserReflection();
             //var field = typeof(UserReflection).GetField("_age",BindingFlags.Static | BindingFlags.NonPublic);
@@ -48,20 +91,5 @@ namespace ExceptionTask
             //method.Invoke(obj: null, parameters: new object[] { (byte)3 });
             //Console.WriteLine(field.GetValue("_age"));
         }
-
-        static User CreateUser ()
-        {
-            Console.Write("Enter name: ");
-            string name = Console.ReadLine();
-            Console.Write("Enter age: ");
-            byte age = Convert.ToByte(Console.ReadLine());
-            Console.Write("Enter password: ");
-            string password = Console.ReadLine();
-            Console.Write("Enter phone number: ");
-            string phoneNumber = Console.ReadLine();
-            return new User(name, age, password, phoneNumber);
-        }
-
-        
     }
 }
